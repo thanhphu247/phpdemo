@@ -48,8 +48,7 @@ if (isset($_GET['list'])) {
                         <td><?php echo $result['email']; ?></td> 
 						<td>
 							<a><i class="fa fa-eye" aria-hidden="true"></i></a>
-						
-							<a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+							<a href="edit.php?edit=<?php echo $result['id']; ?>"><i class="fa fa-pencil-square-o" aria-hidden="true" ></i></a>
 							
 							<a><i class="fa fa-times" aria-hidden="true"></i></a>
 							
