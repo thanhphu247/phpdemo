@@ -5,8 +5,8 @@ $id=$_GET['id'];
 $sql = "DELETE FROM users WHERE id='$id'";
 if ($conn->query($sql) === TRUE) {
     echo '<script language="javascript">';
-    echo 'alert("Delete user success !!");';
-    echo 'window.location.href="list.php?list=1";';
+    // echo 'alert("Delete user success !!");';
+    echo 'window.location.href="list.php";';
     echo '</script>';
 } else {
 echo "Error updating record: " . $conn->error;
