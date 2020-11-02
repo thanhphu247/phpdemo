@@ -51,7 +51,7 @@ if (isset($_GET['list'])) {
 						
 							<a><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 							
-							<a><i class="fa fa-times" aria-hidden="true"></i></a>
+							<a href="deleteUser.php?id=<?php echo $result['id']; ?>"><i class="fa fa-times" aria-hidden="true"></i></a>
 							
 						</td>
                     </tr>

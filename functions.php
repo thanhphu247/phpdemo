@@ -1,5 +1,5 @@
 <?php 
-$conn = mysqli_connect('localhost', 'root', '', 'userlogin');
+$conn = mysqli_connect('localhost', 'root', '', 'php_training');
 
 $username = "";
 $fullname = "";
@@ -203,4 +203,19 @@ function isAdmin()
 		return false;
     }
 }
+
+// function deleteUser(){
+// 	if(isset($_REQUEST['id']) and $_REQUEST['id']!=""){
+// 		$id=$_GET['id'];
+// 		$sql = "DELETE FROM users WHERE id='$id'";
+// 		if ($conn->query($sql) === TRUE) {
+// 		echo "Xoá thành công!";
+// 		} else {
+// 		echo "Error updating record: " . $conn->error;
+// 		}
+		 
+// 		$conn->close();
+// 		}
+// 		header('location: list.php');
+// }
 
