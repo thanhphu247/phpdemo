@@ -1,7 +1,13 @@
 <?php
 session_start();
 
-include('functions.php')
+include('functions.php');
+// Require https
+if ($_SERVER['HTTPS'] != "on") {
+    $url = "https://". $_SERVER['localhost'] . $_SERVER['localhost'];
+    header("location: register.php");
+    EXIT;
+}
 ?>
 
 <html>

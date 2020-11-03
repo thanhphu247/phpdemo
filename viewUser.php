@@ -1,5 +1,11 @@
 <?php 
 session_start();
+// Require https
+if ($_SERVER['HTTPS'] != "on") {
+    $url = "https://". $_SERVER['localhost'] . $_SERVER['localhost'];
+    header("location: viewUser.php");
+    EXIT;
+}
 
 $user_id = intval($_GET['edit']);
 

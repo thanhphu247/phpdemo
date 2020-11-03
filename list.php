@@ -3,6 +3,13 @@ session_start();
 
 include('functions.php');
 
+// Require https
+if ($_SERVER['HTTPS'] != "on") {
+    $url = "https://". $_SERVER['localhost'] . $_SERVER['localhost'];
+    header("location: list.php");
+    EXIT;
+}
+
 $results = [];
 
 if (isset($_GET['list'])) {

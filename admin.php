@@ -1,6 +1,13 @@
 <?php 
 session_start();
 
+// Require https
+if ($_SERVER['HTTPS'] != "on") {
+    $url = "https://". $_SERVER['localhost'] . $_SERVER['localhost'];
+    header("location: admin.php");
+    EXIT;
+}
+
 include('functions.php');
 if (!isAdmin()) {
 	$_SESSION['msg'] = "You must log in first";
