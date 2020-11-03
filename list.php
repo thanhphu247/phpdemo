@@ -37,7 +37,7 @@ if (isset($_GET['list'])) {
             <?php echo display_error(); ?>	
 
             <?php 
-                $conn = mysqli_connect('localhost', 'root', '', 'user');
+                $conn = mysqli_connect('localhost', 'root', '', 'php_training');
             
              
                 // BƯỚC 2: TÌM TỔNG SỐ RECORDS
