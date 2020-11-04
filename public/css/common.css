@@ -12,4 +12,7 @@ form .input-group.btnSubmit {
 form p {
   text-align: center; }
 
+.content {
+  max-width: 600px; }
+
 /*# sourceMappingURL=common.css.map */
