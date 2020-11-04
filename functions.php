@@ -21,6 +21,7 @@ function register(){
 	$email       =  escape($_POST['email']);
 	$password_1  =  escape($_POST['password_1']);
 	$password_2  =  escape($_POST['password_2']);
+	// $image  =  escape($_POST['fileupload']);
 
 	if (empty($username)) { 
 		array_push($errors, "Username is required"); 
@@ -37,15 +38,34 @@ function register(){
 	if ($password_1 != $password_2) {
 		array_push($errors, "The two passwords do not match");
 	}
+	// if (empty($image)) {
+	// 	?> <script>alert('oke')</script> <?php
+	// 	if(isset($_POST['user_type'])){
+	// 		$user_type = escape($_POST['user_type']);
+	// 		if($user_type = 'user'){
+	// 			$image = 'user_profile.png';
+	// 		}else{
+	// 			$image = 'admin_profile.png';
+	// 		}
+	// 	}
+	// }
 
 	if (count($errors) == 0) {
 		$password = md5($password_1);
 
 		if (isset($_POST['user_type'])) {
+			
 			$user_type = escape($_POST['user_type']);
-			$query = "INSERT INTO users (username,fullname, email, user_type, password, image) 
-					  VALUES('$username', '$fullname', '$email', '$user_type', '$password','admin_profile.png')";
-			mysqli_query($conn, $query);
+			if($user_type == 'admin'){
+				$query = "INSERT INTO users (username,fullname, email, user_type, password, image) 
+				VALUES('$username', '$fullname', '$email', '$user_type', '$password','admin_profile.png')";
+	  			mysqli_query($conn, $query);
+			}else{
+				$query = "INSERT INTO users (username,fullname, email, user_type, password, image) 
+				VALUES('$username', '$fullname', '$email', '$user_type', '$password','user_profile.png')";
+	  			mysqli_query($conn, $query);
+			}
+			
 			$_SESSION['success']  = "New user successfully created!!";
 			header('location: home.php');
 		}else{

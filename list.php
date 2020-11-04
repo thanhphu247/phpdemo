@@ -44,7 +44,7 @@ if (isset($_GET['list'])) {
             <?php echo display_error(); ?>	
 
             <?php 
-                $conn = mysqli_connect('localhost', 'root', '', 'user');
+                $conn = mysqli_connect('localhost', 'root', '', 'php_training');
             
              
                 // BƯỚC 2: TÌM TỔNG SỐ RECORDS
@@ -80,6 +80,7 @@ if (isset($_GET['list'])) {
                 <thead>
 					<tr>
 						<th scope="col">ID</th>
+						<th scope="col">Image</th>
 						<th scope="col">Username</th>
 						<th scope="col">Full name</th>
 						<th scope="col">Email</th>
@@ -108,7 +109,8 @@ if (isset($_GET['list'])) {
                 <tbody>
                     <?php foreach ($result as $resultItem): ?>
                     <tr scope="row">
-                        <td><?php echo $resultItem['id']; ?></td>   
+                        <td><?php echo $resultItem['id']; ?></td>  
+                        <td><img width="30px" src="public/images/<?php echo $resultItem['image']; ?>" ></td>  
                         <td><?php echo $resultItem['username']; ?></td>   
                         <td><?php echo $resultItem['fullname']; ?></td>   
                         <td><?php echo $resultItem['email']; ?></td> 
