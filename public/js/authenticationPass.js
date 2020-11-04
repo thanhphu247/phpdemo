@@ -3,7 +3,6 @@ $(document).ready(function() {
     strengthResult.show();
 
     $("#pass1").keyup(function(e) {
-        // e.preventDefault();
         user = $("#user").val();
         pass1 = $("#pass1").val();
         pass2 = $("#pass2").val();
@@ -16,8 +15,6 @@ $(document).ready(function() {
     });
 
     $("#pass2").keyup(function(e) {
-        // e.preventDefault();
-
         user = $("#user").val();
         pass1 = $("#pass1").val();
         pass2 = $("#pass2").val();
@@ -30,16 +27,11 @@ $(document).ready(function() {
     });
 
     $('#reg_btn').click(function(e) {
-        // e.preventDefault();
-
         user = $('#user').val();
         pass1 = $('#pass1').val();
         pass2 = $('#pass2').val();
 
         if (user != '' && pass1 != '' && pass2 != '' && strengthResult.attr('class') != 'short' && strengthResult.attr('class') != 'bad') {
-            // $('#user').val('');
-            // $('#pass1').val('');
-            // $('#pass2').val('');
             strengthResult.removeClass().text('Strength indicator');
         } else if (strengthResult.attr('class') == 'short' || strengthResult.attr('class') == 'bad') {
             alert('Register is failed. Password is not safety!!!');
@@ -74,7 +66,6 @@ $(document).ready(function() {
             mismatch = 5,
             symbolSize = 0,
             natLog, score;
-
         // password 1 != password 2
         if ((password1 != password2) && password2.length > 0)
             return mismatch
