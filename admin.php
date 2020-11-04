@@ -18,6 +18,7 @@ if (!isAdmin()) {
 <head>
 	<title>Create user</title>
 	<link rel="stylesheet" type="text/css" href="public/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="public/css/login.css">
 	<style>
 		.header {
 			background: #003366;

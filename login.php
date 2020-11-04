@@ -8,6 +8,7 @@ session_start();
 <head>
 	<title>Login</title>
 	<link rel="stylesheet" type="text/css" href="public/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="public/css/login.css">
 </head>
 <body>
 	<div class="header">
@@ -28,7 +29,7 @@ session_start();
 		<div class="row align-items-center">
 			<input type="checkbox" name="remember">Remember Me
 		</div>
-		<div class="input-group">
+		<div class="input-group btnSubmit">
 			<button type="submit" class="btn" name="login_btn">Login</button>
 		</div>
 		<p>
