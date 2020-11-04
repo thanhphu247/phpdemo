@@ -10,7 +10,7 @@ include('functions.php');
 //     EXIT;
 // }
 
-if (!isAdmin()) {
+if (!isAdmin()) {	
 	$_SESSION['msg'] = "You must log in first";
 	header('location: login.php');
 }
