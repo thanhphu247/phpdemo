@@ -1,6 +1,6 @@
 <?php
 // Require https
-$conn = mysqli_connect('localhost', 'root', '', 'php_training');
+$conn = mysqli_connect('localhost', 'root', '', 'user');
 
 $username = "";
 $fullname = "";
