@@ -18,6 +18,7 @@ if (!isAdmin()) {
 <head>
 	<title>Create user</title>
 	<link rel="stylesheet" type="text/css" href="public/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="public/css/common.css">
 	<style>
 		.header {
 			background: #003366;
@@ -105,7 +106,7 @@ if (!isAdmin()) {
    // Đã có dữ liệu upload, thực hiện xử lý file upload
 
   //Thư mục bạn sẽ lưu file upload
-  $target_dir    = "new/";
+  $target_dir    = "public/images/";
   //Vị trí file lưu tạm trong server (file sẽ lưu trong uploads, với tên giống tên ban đầu)
   $target_file   = $target_dir . basename($_FILES["fileupload"]["name"]);
 
