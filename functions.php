@@ -43,14 +43,14 @@ function register(){
 
 		if (isset($_POST['user_type'])) {
 			$user_type = escape($_POST['user_type']);
-			$query = "INSERT INTO users (username,fullname, email, user_type, password) 
-					  VALUES('$username', '$fullname', '$email', '$user_type', '$password')";
+			$query = "INSERT INTO users (username,fullname, email, user_type, password, image) 
+					  VALUES('$username', '$fullname', '$email', '$user_type', '$password','admin_profile.png')";
 			mysqli_query($conn, $query);
 			$_SESSION['success']  = "New user successfully created!!";
 			header('location: home.php');
 		}else{
-			$query = "INSERT INTO users (username, fullname, email, user_type, password) 
-					  VALUES('$username', '$fullname', '$email', 'user', '$password')";
+			$query = "INSERT INTO users (username, fullname, email, user_type, password,image) 
+					  VALUES('$username', '$fullname', '$email', 'user', '$password','user_profile.png')";
 			mysqli_query($conn, $query);
 
 			$logged_in_user_id = mysqli_insert_id($conn);
