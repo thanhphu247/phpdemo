@@ -39,20 +39,19 @@ function register(){
 		array_push($errors, "The two passwords do not match");
 	}
 	//khai báo sql
-	// $query = "SELECT * FROM users Where `email` = '$email'";
-	// $results = mysqli_query($conn, $query);
-	// $num = mysql_num_rows($results);
-	// //kiểm tra nếu có email rồi thì báo lỗi
-	// if($num > 0){
-	// 	array_push($errors, "Email đã có người sử dụng");
-	// }
+	$query = "SELECT * FROM users Where `email` = '$email'";
+	$results = mysqli_query($conn, $query);
+	//kiểm tra nếu có email rồi thì báo lỗi
+	if($results->num_rows > 0){
+		array_push($errors, "Email đã có người sử dụng!!");
+	}
 
 
 	if (count($errors) == 0) {
 		$password = md5($password_1);
 		if (isset($_POST['user_type'])) {
 			$user_type = escape($_POST['user_type']);
-			//Chặn tất công từ uploadfile
+			//Chặn tấn công từ uploadfile
 			//Kiểm tra người dùng có upload file lên không
 			if(empty($_FILES["fileupload"]['name'])){
 				if($user_type == 'admin'){
@@ -122,7 +121,6 @@ function register(){
 					{
 						echo "File ". basename( $_FILES["fileupload"]["name"]).
 						" Đã upload thành công.";
-						echo 'user: '.$user_type;
 						if($user_type == 'admin'){
 							$query = "INSERT INTO users (username,fullname, email, user_type, password, image) 
 							VALUES('$username', '$fullname', '$email', '$user_type', '$password','$image')";
@@ -136,32 +134,18 @@ function register(){
 							//   echo "add user";
 							$_SESSION['success']  = "New user successfully created!!";
 						}
-		
 					}
 					else
 					{
 						array_push($errors, "Có lỗi xảy ra khi upload file.");
-						echo "Có lỗi xảy ra khi upload file.";
 					}
 				}
 				else
 				{
 					array_push($errors, "Không upload được file, có thể do file lớn, kiểu file không đúng ...");
-					// echo "Không upload được file, có thể do file lớn, kiểu file không đúng ...";
 				}
 
 			}
-			// if(empty($_FILES["fileupload"]["name"])){
-			// 	array_push($errors, "chưa có file ảnh");
-			// }
-			// else{
-			// 	$target_dir ='./';
-			// 	$target_file   = $target_dir . basename($_FILES["fileupload"]["name"]);
-			// 	move_uploaded_file($_FILES["fileupload"]["tmp_name"], $target_file);
-			// 	$query = "INSERT INTO users (username,fullname, email, user_type, password, image) 
-			// 	VALUES('$username', '$fullname', '$email', '$user_type', '$password','$image')";
-			// 	  mysqli_query($conn, $query);
-			// 	//   echo "add user";
 				$_SESSION['success']  = "New user successfully created!!";
 				header('location: home.php');
 			// }
@@ -178,34 +162,35 @@ function register(){
 		}
 	}
 }
+	// $image = $_FILES['fileupload']['name'];
+
+	// if(empty($_FILES['fileupload']['name'])){
+	// 	echo $image;
+	// 	echo 'hinh cu';
+	// 	mysqli_query($conn, "UPDATE `users` SET `username` = '$username', `fullname` = '$fullname', `email`='$email' WHERE `username` = '$username'");
+	// }
+	// else{
+	// 	echo 'oke chưa';
+	// 	$target_dir ='public/images/';
+	// 	$target_file   = $target_dir . basename($_FILES["fileupload"]["name"]);
+	// 	mysqli_query($conn, "UPDATE `users` SET `username` = '$username',`image` = '$image', `fullname` = '$fullname', `email`='$email' WHERE `username` = '$username'");
+	// 	echo $image;
+	// }
 
 function edit() {
-	global $conn, $errors, $username,$fullname, $email, $image;
+	global $conn, $errors, $username,$fullname, $email;
 	$username    =  escape($_POST['username1']);
     $fullname    =  escape($_POST['fullname1']);
 	$email       =  escape($_POST['email1']);
-	$image = $_FILES['fileupload']['name'];
-
-	if(empty($_FILES['fileupload']['name'])){
-		echo $image;
-		echo 'hinh cu';
-		mysqli_query($conn, "UPDATE `users` SET `username` = '$username', `fullname` = '$fullname', `email`='$email' WHERE `username` = '$username'");
-	}
-	else{
-		echo 'oke chưa';
-		$target_dir ='public/images/';
-		$target_file   = $target_dir . basename($_FILES["fileupload"]["name"]);
-		mysqli_query($conn, "UPDATE `users` SET `username` = '$username',`image` = '$image', `fullname` = '$fullname', `email`='$email' WHERE `username` = '$username'");
-		echo $image;
-	}
-	
+	mysqli_query($conn, "UPDATE `users` SET `username` = '$username', `fullname` = '$fullname', `email`='$email' 
+	WHERE `username` = '$username'");
 	$_SESSION['success']  = "Change successfully";
 	// // header("Refresh:2; url=page2.php");
 	if (isset($_COOKIE["user"]) AND isset($_COOKIE["pass"])){
 		setcookie("user", '', time() - 3600);
 		setcookie("pass", '', time() - 3600);
     }
-	// header('location: home.php');
+	header('location: home.php');
 	
 }
 

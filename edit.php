@@ -55,11 +55,11 @@ if (isset($_GET['edit'])) {
 
     <form method="post" action="edit.php">
         <?php echo display_error(); ?>
-        <label>Hình ảnh hiện tại:</label> <br>
+        <!-- <label>Hình ảnh hiện tại:</label> <br>
         <img src="public/images/<?php echo $data['image']; ?>" width="80px"> <br>
         <label>Chọn hình ảnh:</label> <br>
-        <input type="file" name="fileupload" id="fileupload" onchange="return fileValidation()"> 
-        <div id="imagePreview"></div><br>
+        <input type="file" name="fileupload" id="fileupload" onchange="return fileValidation()">
+        <div id="imagePreview"></div><br> -->
         
 
         <div class="input-group">

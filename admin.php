@@ -34,21 +34,21 @@ if (!isAdmin()) {
 	</div>
 	
 	<form method="post" action="admin.php" enctype="multipart/form-data">
-
+        <!-- nếu có lỗi thì sẽ hiển thị lên -->
 		<?php echo display_error(); ?>
 		<!-- Chọn file để upload: -->
 
 		<label>Chọn hình ảnh:</label> <br>
         <div id="imagePreview"></div>
-		<input type="file" name="fileupload" id="fileupload" onchange="return fileValidation()"> <br><br>
-        
-
+		<input type="file" name="fileupload" id="fileupload" onchange="return fileValidation()">
+        <br>
 		<div class="input-group">
         <!-- Image preview -->
 			<label>Username</label>
 			<input type="text" name="username" value="<?php echo $username; ?>">
 		</div>
 		<div class="input-group">
+
 			<label>Full Name</label>
 			<input type="text" name="fullname" value="<?php echo $fullname; ?>">
 		</div>
