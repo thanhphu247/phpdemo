@@ -22,7 +22,6 @@ function register(){
 	$password_1  =  escape($_POST['password_1']);
 	$password_2  =  escape($_POST['password_2']);
 	$image = $_FILES['fileupload']['name'];
-	// $image  =  escape($_POST['fileupload']);
 
 	if (empty($username)) { 
 		array_push($errors, "Username is required"); 
@@ -39,14 +38,22 @@ function register(){
 	if ($password_1 != $password_2) {
 		array_push($errors, "The two passwords do not match");
 	}
+	//khai báo sql
+	// $query = "SELECT * FROM users Where `email` = '$email'";
+	// $results = mysqli_query($conn, $query);
+	// $num = mysql_num_rows($results);
+	// //kiểm tra nếu có email rồi thì báo lỗi
+	// if($num > 0){
+	// 	array_push($errors, "Email đã có người sử dụng");
+	// }
 
 
 	if (count($errors) == 0) {
 		$password = md5($password_1);
-
 		if (isset($_POST['user_type'])) {
-			
 			$user_type = escape($_POST['user_type']);
+			//Chặn tất công từ uploadfile
+			//Kiểm tra người dùng có upload file lên không
 			if(empty($_FILES["fileupload"]['name'])){
 				if($user_type == 'admin'){
 					$query = "INSERT INTO users (username,fullname, email, user_type, password, image) 
@@ -59,11 +66,6 @@ function register(){
 				}
 			}
 			else{
-				// if (!isset($_FILES["fileupload"]))
-				// {
-				// 	echo " ";
-				// 	die;
-				// }
 				// Đã có dữ liệu upload, thực hiện xử lý file upload
 				//Thư mục bạn sẽ lưu file upload
 				$target_dir    = "public/images/";
@@ -72,10 +74,6 @@ function register(){
 				$allowUpload   = true;
 				//Lấy phần mở rộng của file (jpg, png, ...)
 				$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-				// Cỡ lớn nhất được upload (bytes)
-				$maxfilesize   = 800000;
-				//Những loại file được phép upload
-				$allowtypes    = array('jpg', 'png', 'jpeg', 'gif');
 				//check bằng hàm getimagesize
 				if(isset($_POST["submit"])) {
 					//Kiểm tra xem có phải là ảnh bằng hàm getimagesize
@@ -98,16 +96,22 @@ function register(){
 					echo "Tên file đã tồn tại trên server, không được ghi đè";
 					$allowUpload = false;
 				}
+				// Cỡ lớn nhất được upload (bytes)
+				//Giới hạn 10 MB để upload ảnh
+				$maxfilesize   = 5485760;
+
 				// Kiểm tra kích thước file upload cho vượt quá giới hạn cho phép
 				if ($_FILES["fileupload"]["size"] > $maxfilesize)
 				{
-					echo "Không được upload ảnh lớn hơn $maxfilesize (bytes).";
+					array_push($errors, "Không được upload ảnh lớn hơn $maxfilesize (bytes)");
 					$allowUpload = false;
 				}
+				//Những loại file được phép upload
+				$allowtypes    = array('jpg', 'png', 'jpeg', 'gif');
 				// Kiểm tra kiểu file
 				if (!in_array($imageFileType,$allowtypes ))
 				{
-					echo "Chỉ được upload các định dạng JPG, PNG, JPEG, GIF";
+					array_push($errors, "Chỉ được upload các định dạng JPG, PNG, JPEG, GIF");
 					$allowUpload = false;
 				}
 				//Kiểm tra xem allowUpload là true/false
@@ -123,28 +127,44 @@ function register(){
 							$query = "INSERT INTO users (username,fullname, email, user_type, password, image) 
 							VALUES('$username', '$fullname', '$email', '$user_type', '$password','$image')";
 							  mysqli_query($conn, $query);
+							  $_SESSION['success']  = "New user successfully created!!";
 						}else{
 							// echo "image: ".$image;
 							$query = "INSERT INTO users (username,fullname, email, user_type, password, image) 
 							VALUES('$username', '$fullname', '$email', '$user_type', '$password','$image')";
 							  mysqli_query($conn, $query);
 							//   echo "add user";
+							$_SESSION['success']  = "New user successfully created!!";
 						}
 		
 					}
 					else
 					{
+						array_push($errors, "Có lỗi xảy ra khi upload file.");
 						echo "Có lỗi xảy ra khi upload file.";
 					}
 				}
 				else
 				{
-					echo "Không upload được file, có thể do file lớn, kiểu file không đúng ...";
+					array_push($errors, "Không upload được file, có thể do file lớn, kiểu file không đúng ...");
+					// echo "Không upload được file, có thể do file lớn, kiểu file không đúng ...";
 				}
 
 			}
-			$_SESSION['success']  = "New user successfully created!!";
-			header('location: home.php');
+			// if(empty($_FILES["fileupload"]["name"])){
+			// 	array_push($errors, "chưa có file ảnh");
+			// }
+			// else{
+			// 	$target_dir ='./';
+			// 	$target_file   = $target_dir . basename($_FILES["fileupload"]["name"]);
+			// 	move_uploaded_file($_FILES["fileupload"]["tmp_name"], $target_file);
+			// 	$query = "INSERT INTO users (username,fullname, email, user_type, password, image) 
+			// 	VALUES('$username', '$fullname', '$email', '$user_type', '$password','$image')";
+			// 	  mysqli_query($conn, $query);
+			// 	//   echo "add user";
+				$_SESSION['success']  = "New user successfully created!!";
+				header('location: home.php');
+			// }
 		}else{
 			$query = "INSERT INTO users (username, fullname, email, user_type, password,image) 
 					  VALUES('$username', '$fullname', '$email', 'user', '$password','user_profile.png')";
@@ -154,18 +174,30 @@ function register(){
 
 			$_SESSION['user'] = getUserById($logged_in_user_id); // put logged in user in session
 			$_SESSION['success']  = "You are now logged in";
-			header('location: index.php');				
+			header('location: index.php');
 		}
 	}
 }
 
 function edit() {
-	global $conn, $errors, $username,$fullname, $email;
+	global $conn, $errors, $username,$fullname, $email, $image;
 	$username    =  escape($_POST['username1']);
     $fullname    =  escape($_POST['fullname1']);
 	$email       =  escape($_POST['email1']);
+	$image = $_FILES['fileupload']['name'];
 
-	mysqli_query($conn, "UPDATE `users` SET `username` = '$username', `fullname` = '$fullname', `email`='$email' WHERE `username` = '$username'");
+	if(empty($_FILES['fileupload']['name'])){
+		echo $image;
+		echo 'hinh cu';
+		mysqli_query($conn, "UPDATE `users` SET `username` = '$username', `fullname` = '$fullname', `email`='$email' WHERE `username` = '$username'");
+	}
+	else{
+		echo 'oke chưa';
+		$target_dir ='public/images/';
+		$target_file   = $target_dir . basename($_FILES["fileupload"]["name"]);
+		mysqli_query($conn, "UPDATE `users` SET `username` = '$username',`image` = '$image', `fullname` = '$fullname', `email`='$email' WHERE `username` = '$username'");
+		echo $image;
+	}
 	
 	$_SESSION['success']  = "Change successfully";
 	// // header("Refresh:2; url=page2.php");
@@ -173,7 +205,7 @@ function edit() {
 		setcookie("user", '', time() - 3600);
 		setcookie("pass", '', time() - 3600);
     }
-	header('location: home.php');
+	// header('location: home.php');
 	
 }
 
